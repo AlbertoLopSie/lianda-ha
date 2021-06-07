@@ -1,0 +1,10 @@
+{
+        "domain": "lianda",
+        "name": "Lianda Covers",
+        "documentation": "",
+        "requirements": ["broadlink==0.17.0"],
+        "dependencies": [],
+        "codeowners": ["@albertolopez"],
+        "homeassistant": "0.96.0",
+        "version": "2021.1"
+}

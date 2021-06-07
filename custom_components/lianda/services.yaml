@@ -1,0 +1,120 @@
+# # Service ID
+reset_rolling_code:
+  # Service name as shown in UI
+  name: Reset Rolling Code
+  # Description of the service
+  description: Resets the rolling code for a Lianda remote
+  # If the service accepts entity IDs, target allows the user to specify entities by entity, device, or area. 
+  # If `target` is specified, `entity_id` should not be defined in the `fields` map. By default it shows only 
+  # targets matching entities from the same domain as the service, but if further customization is required, 
+  # target supports the entity, device, and area selectors (https://www.home-assistant.io/docs/blueprint/selectors/). 
+  # Entity selector parameters will automatically be applied to device and area, and device selector parameters 
+  # will automatically be applied to area. 
+  # target:
+  # Different fields that your service accepts
+  target: cover
+  fields:
+    # entity_id:
+    #   name: Entity ID
+    #   description: "Entity Id of the lianda cover"
+    #   required: true
+    #   example: cover.ofi_albert
+    start_rolling_code:
+      name: Start Code
+      description: Rolling code for the next command
+      required: false
+      example: 2765
+      
+send_command:
+  name: Send Command
+  description: "Sends a command to a Lianda remote"
+  target: cover
+  fields:
+    # entity_id:
+    #   name: Entity ID
+    #   description: Entity Id of the lianda cover
+    #   required: true
+    #   example: cover.ofi_albert
+    command:
+      name: Command
+      description: "Command to send. ['Up': 6, 'Down': 8, 'Stop': 5, 'Prog': 12, 'Up+Stop': 7, 'Down+Stop': 9, 'Up+Down': 10, 'Up+Down+Stop': 11]"
+      required: true
+      example: 'u'
+      selector:
+        select:
+          options:
+            - 'Up'
+            - 'Down'
+            - 'Stop'
+            - 'Prog'
+            - 'Up+Stop'
+            - 'Down+Stop'
+            - 'Up+Down'
+            - 'Up+Down+Stop'
+    repeats:
+      name: Repeats
+      description: "Number of addtn'l commands in the lianda transmit packet [Optional, Dflt=2]"
+      required: false
+      example: 2
+      default: 2
+      
+add_remote:
+  name: Add Remote
+  description: "Sends a long PROG command (32 repeats) to enter the motor in programming mode"
+  target: cover
+  # fields:
+  #   entity_id:
+  #     name: Entity ID
+  #     description: Entity Id of the lianda cover
+  #     required: true
+  #     example: cover.ofi_albert
+  
+  
+set_position:
+  name: Set Absolute Position 
+  description: "Sets absolute cover position"
+  target: cover
+  fields:
+    # entity_id:
+    #   name: Entity ID
+    #   description: Entity Id of the lianda cover
+    #   required: true
+    #   example: cover.ofi_albert
+    position:
+      name: Position
+      description: Absolute position
+      required: true
+      example: 50
+  
+set_position_rel:
+  name: Set Relative Position 
+  description: "Sets relative cover position"
+  target: cover
+  fields:
+    # entity_id:
+    #   name: Entity ID
+    #   description: Entity Id of the lianda cover
+    #   required: true
+    #   example: cover.ofi_albert
+    position:
+      name: Offset
+      description: Offset relative to current position
+      required: true
+      example: 10
+
+sync_position:
+  name: Sync Position
+  description: "Syncs real/percibed cover position"
+  target: cover
+  fields:
+    # entity_id:
+    #   name: Entity ID
+    #   description: Entity Id of the lianda cover
+    #   required: true
+    #   example: cover.ofi_albert
+    sync_fully_open:
+      name: Fully open
+      description: Syncs fully open?
+      required: false
+      default: true
+      
